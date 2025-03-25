@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - ETCETRA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="header-left">
+                        <button class="menu-button" id="menuButton" aria-label="Open menu">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <a href="index.html" class="logo">ETCETRA</a>
+                        <nav class="desktop-nav">
+                            <a href="index.html" class="nav-link">Home</a>
+                            <a href="products.html" class="nav-link active">Products</a>
+                            <a href="about.html" class="nav-link">About</a>
+                            <a href="contact.html" class="nav-link">Contact</a>
+                        </nav>
+                    </div>
+                    <div class="header-search">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search for products...">
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                            <i class="fas fa-sun sun-icon"></i>
+                            <i class="fas fa-moon moon-icon"></i>
+                        </button>
+                        <a href="profile.html" class="icon-button" aria-label="Profile">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <a href="cart.html" class="icon-button" aria-label="Cart">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-container">
+                <div class="mobile-menu-header">
+                    <a href="index.html" class="logo">ETCETRA</a>
+                    <button class="close-menu" id="closeMenu" aria-label="Close menu">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <nav class="mobile-nav">
+                    <a href="index.html" class="mobile-nav-link">Home</a>
+                    <a href="products.html" class="mobile-nav-link active">Products</a>
+                    <a href="about.html" class="mobile-nav-link">About</a>
+                    <a href="contact.html" class="mobile-nav-link">Contact</a>
+                    <a href="login.html" class="mobile-nav-link">Login</a>
+                    <a href="register.html" class="mobile-nav-link">Register</a>
+                </nav>
+            </div>
+        </div>
+
+        <main>
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <a href="products.html">Products</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span id="productName">Product Name</span>
+                </div>
+
+                <div class="product-detail-container">
+                    <div class="product-gallery">
+                        <div class="main-product-image">
+                            <img id="mainProductImage" src="placeholder.jpg" alt="Product Image">
+                        </div>
+                        <div class="product-thumbnails" id="productThumbnails">
+                            <!-- Thumbnails will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="product-info">
+                        <h1 id="productTitle" class="product-title">Product Name</h1>
+                        
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span id="reviewCount">125 reviews</span>
+                        </div>
+                        
+                        <div class="product-price">
+                            <span id="productPrice" class="current-price">$99.99</span>
+                            <span id="originalPrice" class="original-price">$129.99</span>
+                            <span class="discount-badge">-23%</span>
+                        </div>
+                        
+                        <div class="product-description" id="productDescription">
+                            <p>High-quality product with premium materials. Perfect for everyday use with a stylish design that complements any outfit or setting.</p>
+                        </div>
+                        
+                        <div class="product-options">
+                            <div class="option-group">
+                                <label>Size</label>
+                                <div class="size-options" id="sizeOptions">
+                                    <button class="size-button active" data-size="S">S</button>
+                                    <button class="size-button" data-size="M">M</button>
+                                    <button class="size-button" data-size="L">L</button>
+                                    <button class="size-button" data-size="XL">XL</button>
+                                </div>
+                                <a href="size-guide.html" class="size-guide-link">Size Guide</a>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label>Color</label>
+                                <div class="color-options" id="colorOptions">
+                                    <button class="color-button active" data-color="Black" style="background-color: #000;">
+                                        <span class="color-name">Black</span>
+                                    </button>
+                                    <button class="color-button" data-color="Blue" style="background-color: #1e3a8a;">
+                                        <span class="color-name">Blue</span>
+                                    </button>
+                                    <button class="color-button" data-color="Green" style="background-color: #166534;">
+                                        <span class="color-name">Green</span>
+                                    </button>
+                                    <button class="color-button" data-color="Red" style="background-color: #b91c1c;">
+                                        <span class="color-name">Red</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label>Quantity</label>
+                                <div class="quantity-selector">
+                                    <button class="quantity-button" id="decreaseQuantity">-</button>
+                                    <span class="quantity" id="quantity">1</span>
+                                    <button class="quantity-button" id="increaseQuantity">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <button class="button primary" id="addToCartBtn">
+                                <i class="fas fa-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                            <button class="button secondary" id="buyNowBtn">Buy Now</button>
+                            <button class="icon-action-button" id="addToWishlistBtn" aria-label="Add to wishlist">
+                                <i class="far fa-heart"></i>
+                            </button>
+                            <button class="icon-action-button" id="shareProductBtn" aria-label="Share product">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="product-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-truck"></i>
+                                <span>Free shipping on orders over $50</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-undo"></i>
+                                <span>30-day return policy</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Ships within 1-2 business days</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-tabs">
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="details">Details</button>
+                        <button class="tab-button" data-tab="specifications">Specifications</button>
+                        <button class="tab-button" data-tab="reviews">Reviews</button>
+                        <button class="tab-button" data-tab="shipping">Shipping & Returns</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="details">
+                        <div class="tab-inner">
+                            <h3>Product Details</h3>
+                            <p>Our premium product is designed with quality and comfort in mind. Made from high-quality materials, it's built to last while providing exceptional performance.</p>
+                            <ul>
+                                <li>Premium quality materials</li>
+                                <li>Durable construction</li>
+                                <li>Versatile design for multiple uses</li>
+                                <li>Easy to clean and maintain</li>
+                                <li>Eco-friendly manufacturing process</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="specifications">
+                        <div class="tab-inner">
+                            <h3>Product Specifications</h3>
+                            <table class="specs-table">
+                                <tr>
+                                    <td>Material</td>
+                                    <td>Premium cotton blend</td>
+                                </tr>
+                                <tr>
+                                    <td>Dimensions</td>
+                                    <td>Varies by size (see size guide)</td>
+                                </tr>
+                                <tr>
+                                    <td>Weight</td>
+                                    <td>0.3 kg</td>
+                                </tr>
+                                <tr>
+                                    <td>Care Instructions</td>
+                                    <td>Machine wash cold, tumble dry low</td>
+                                </tr>
+                                <tr>
+                                    <td>Country of Origin</td>
+                                    <td>Made in USA</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="reviews">
+                        <div class="tab-inner">
+                            <div class="reviews-summary">
+                                <div class="rating-summary">
+                                    <div class="average-rating">4.8</div>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <div class="total-reviews">Based on 125 reviews</div>
+                                </div>
+                                <div class="rating-bars">
+                                    <div class="rating-bar">
+                                        <span class="rating-label">5 stars</span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 75%"></div>
+                                        </div>
+                                        <span class="rating-count">94</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="rating-label">4 stars</span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 20%"></div>
+                                        </div>
+                                        <span class="rating-count">25</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="rating-label">3 stars</span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 5%"></div>
+                                        </div>
+                                        <span class="rating-count">6</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="rating-label">2 stars</span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 0%"></div>
+                                        </div>
+                                        <span class="rating-count">0</span>
+                                    </div>
+                                    <div class="rating-bar">
+                                        <span class="rating-label">1 star</span>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 0%"></div>
+                                        </div>
+                                        <span class="rating-count">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="review-list" id="reviewList">
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="reviewer-name">Sarah J.</div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="review-date">March 15, 2023</div>
+                                    <div class="review-content">
+                                        <p>Absolutely love this product! The quality is exceptional and it fits perfectly. I've received so many compliments when wearing it. Highly recommend!</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="reviewer-name">Michael T.</div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="review-date">February 28, 2023</div>
+                                    <div class="review-content">
+                                        <p>Great product overall. The material is high quality and feels durable. The only reason I'm giving 4 stars instead of 5 is that it runs slightly larger than expected. Otherwise, very satisfied with my purchase.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="reviewer-info">
+                                            <div class="reviewer-avatar">
+                                                <i class="fas fa-user-circle"></i>
+                                            </div>
+                                            <div class="reviewer-name">Jessica L.</div>
+                                        </div>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="review-date">February 10, 2023</div>
+                                    <div class="review-content">
+                                        <p>This is my second purchase and I'm just as impressed as the first time. The colors are vibrant and the quality is consistent. Fast shipping too!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="load-more-reviews">
+                                <button class="button outline">Load More Reviews</button>
+                            </div>
+                            
+                            <div class="write-review">
+                                <h3>Write a Review</h3>
+                                <form class="review-form">
+                                    <div class="form-group">
+                                        <label for="reviewRating">Rating</label>
+                                        <div class="rating-input">
+                                            <i class="far fa-star" data-rating="1"></i>
+                                            <i class="far fa-star" data-rating="2"></i>
+                                            <i class="far fa-star" data-rating="3"></i>
+                                            <i class="far fa-star" data-rating="4"></i>
+                                            <i class="far fa-star" data-rating="5"></i>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reviewTitle">Title</label>
+                                        <input type="text" id="reviewTitle" class="form-input" placeholder="Summarize your experience">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reviewContent">Review</label>
+                                        <textarea id="reviewContent" class="form-input" rows="4" placeholder="Tell us what you liked or didn't like about this product"></textarea>
+                                    </div>
+                                    <button type="submit" class="button primary">Submit Review</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="shipping">
+                        <div class="tab-inner">
+                            <h3>Shipping Information</h3>
+                            <p>We offer several shipping options to meet your needs:</p>
+                            <ul>
+                                <li><strong>Standard Shipping:</strong> 5-7 business days (Free on orders over $50)</li>
+                                <li><strong>Express Shipping:</strong> 2-3 business days ($9.99)</li>
+                                <li><strong>Next Day Delivery:</strong> Next business day if ordered before 2pm ($14.99)</li>
+                            </ul>
+                            
+                            <h3>Return Policy</h3>
+                            <p>We want you to be completely satisfied with your purchase. If for any reason you're not happy with your order, you can return it within 30 days of delivery for a full refund or exchange.</p>
+                            <p>To be eligible for a return, your item must be unused and in the same condition that you received it. It must also be in the original packaging.</p>
+                            <p>For more information, please visit our <a href="returns.html">Returns page</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="related-products">
+                    <h2>You Might Also Like</h2>
+                    <div class="products-grid" id="relatedProducts">
+                        <!-- Related products will be added dynamically -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h3 class="footer-heading">Shop</h3>
+                            <ul class="footer-list">
+                                <li><a href="products.html">All Products</a></li>
+                                <li><a href="products.html?category=new">New Arrivals</a></li>
+                                <li><a href="products.html?category=bestsellers">Best Sellers</a></li>
+                                <li><a href="products.html?category=sale">Sale</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h3 class="footer-heading">Company</h3>
+                            <ul class="footer-list">
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="careers.html">Careers</a></li>
+                                <li><a href="terms.html">Terms & Conditions</a></li>
+                                <li><a href="privacy.html">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h3 class="footer-heading">Account</h3>
+                            <ul class="footer-list">
+                                <li><a href="login.html">Login</a></li>
+                                <li><a href="register.html">Register</a></li>
+                                <li><a href="profile.html">My Account</a></li>
+                                <li><a href="orders.html">Order History</a></li>
+                                <li><a href="wishlist.html">Wishlist</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-column">
+                            <h3 class="footer-heading">Customer Service</h3>
+                            <ul class="footer-list">
+                                <li><a href="faqs.html">FAQs</a></li>
+                                <li><a href="shipping.html">Shipping Information</a></li>
+                                <li><a href="returns.html">Returns & Exchanges</a></li>
+                                <li><a href="size-guide.html">Size Guide</a></li>
+                                <li><a href="contact.html">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="copyright">
+                            &copy; 2023 ETCETRA. All rights reserved.
+                        </div>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Pinterest">
+                                <i class="fab fa-pinterest-p"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get product ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            // Fetch product data
+            fetch(`products.json`)
+                .then(response => response.json())
+                .then(data => {
+                    // Find the product by ID
+                    const product = data.find(p => p.id === productId) || data[0];
+                    
+                    // Update product details
+                    document.getElementById('productName').textContent = product.name;
+                    document.getElementById('productTitle').textContent = product.name;
+                    document.getElementById('productPrice').textContent = `$${product.price.toFixed(2)}`;
+                    document.getElementById('productDescription').innerHTML = `<p>${product.description}</p>`;
+                    document.getElementById('mainProductImage').src = product.image || 'placeholder.jpg';
+                    document.getElementById('mainProductImage').alt = product.name;
+                    
+                    // Update breadcrumb
+                    document.getElementById('productName').textContent = product.name;
+                    
+                    // Generate thumbnails if there are multiple images
+                    if (product.images && product.images.length > 0) {
+                        const thumbnailsContainer = document.getElementById('productThumbnails');
+                        thumbnailsContainer.innerHTML = '';
+                        
+                        // Add main image as first thumbnail
+                        const mainThumb = document.createElement('div');
+                        mainThumb.className = 'thumbnail active';
+                        mainThumb.innerHTML = `<img src="${product.image}" alt="${product.name}">`;
+                        mainThumb.addEventListener('click', function() {
+                            document.getElementById('mainProductImage').src = product.image;
+                            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                            this.classList.add('active');
+                        });
+                        thumbnailsContainer.appendChild(mainThumb);
+                        
+                        // Add additional images
+                        product.images.forEach((img, index) => {
+                            const thumb = document.createElement('div');
+                            thumb.className = 'thumbnail';
+                            thumb.innerHTML = `<img src="${img}" alt="${product.name} - Image ${index + 1}">`;
+                            thumb.addEventListener('click', function() {
+                                document.getElementById('mainProductImage').src = img;
+                                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                            thumbnailsContainer.appendChild(thumb);
+                        });
+                    }
+                    
+                    // Set up size options
+                    if (product.sizes && product.sizes.length > 0) {
+                        const sizeOptions = document.getElementById('sizeOptions');
+                        sizeOptions.innerHTML = '';
+                        
+                        product.sizes.forEach(size => {
+                            const sizeBtn = document.createElement('button');
+                            sizeBtn.className = 'size-button';
+                            sizeBtn.setAttribute('data-size', size);
+                            sizeBtn.textContent = size;
+                            sizeBtn.addEventListener('click', function() {
+                                document.querySelectorAll('.size-button').forEach(btn => btn.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                            sizeOptions.appendChild(sizeBtn);
+                        });
+                        
+                        // Set first size as active
+                        if (sizeOptions.firstChild) {
+                            sizeOptions.firstChild.classList.add('active');
+                        }
+                    }
+                    
+                    // Set up color options
+                    if (product.colors && product.colors.length > 0) {
+                        const colorOptions = document.getElementById('colorOptions');
+                        colorOptions.innerHTML = '';
+                        
+                        const colorMap = {
+                            'Black': '#000',
+                            'White': '#fff',
+                            'Blue': '#1e3a8a',
+                            'Red': '#b91c1c',
+                            'Green': '#166534',
+                            'Yellow': '#eab308',
+                            'Purple': '#7e22ce',
+                            'Gray': '#6b7280'
+                        };
+                        
+                        product.colors.forEach(color => {
+                            const colorBtn = document.createElement('button');
+                            colorBtn.className = 'color-button';
+                            colorBtn.setAttribute('data-color', color);
+                            colorBtn.style.backgroundColor = colorMap[color] || color;
+                            
+                            const colorName = document.createElement('span');
+                            colorName.className = 'color-name';
+                            colorName.textContent = color;
+                            colorBtn.appendChild(colorName);
+                            
+                            colorBtn.addEventListener('click', function() {
+                                document.querySelectorAll('.color-button').forEach(btn => btn.classList.remove('active'));
+                                this.classList.add('active');
+                            });
+                            
+                            colorOptions.appendChild(colorBtn);
+                        });
+                        
+                        // Set first color as active
+                        if (colorOptions.firstChild) {
+                            colorOptions.firstChild.classList.add('active');
+                        }
+                    }
+                    
+                    // Load related products
+                    loadRelatedProducts(data, product.category, product.id);
+                })
+                .catch(error => {
+                    console.error('Error loading product data:', error);
+                });
+            
+            // Quantity selector
+            document.getElementById('decreaseQuantity').addEventListener('click', function() {
+                const quantityElement = document.getElementById('quantity');
+                let quantity = parseInt(quantityElement.textContent);
+                if (quantity > 1) {
+                    quantityElement.textContent = quantity - 1;
+                }
+            });
+            
+            document.getElementById('increaseQuantity').addEventListener('click', function() {
+                const quantityElement = document.getElementById('quantity');
+                let quantity = parseInt(quantityElement.textContent);
+                quantityElement.textContent = quantity + 1;
+            });
+            
+            // Tab switching
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and content
+                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Add to cart functionality
+            document.getElementById('addToCartBtn').addEventListener('click', function() {
+                const productId = new URLSearchParams(window.location.search).get('id');
+                const productName = document.getElementById('productTitle').textContent;
+                const productPrice = parseFloat(document.getElementById('productPrice').textContent.replace('$', ''));
+                const productImage = document.getElementById('mainProductImage').src;
+                const quantity = parseInt(document.getElementById('quantity').textContent);
+                
+                // Get selected size and color
+                const selectedSize = document.querySelector('.size-button.active')?.getAttribute('data-size') || '';
+                const selectedColor = document.querySelector('.color-button.active')?.getAttribute('data-color') || '';
+                
+                // Create cart item object
+                const cartItem = {
+                    id: productId,
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    quantity: quantity,
+                    size: selectedSize,
+                    color: selectedColor
+                };
+                
+                // Add to cart
+                addToCart(cartItem);
+                
+                // Show confirmation message
+                alert('Product added to cart!');
+                
+                // Update cart count
+                updateCartCount();
+            });
+            
+            // Buy now functionality
+            document.getElementById('buyNowBtn').addEventListener('click', function() {
+                // First add to cart
+                document.getElementById('addToCartBtn').click();
+                // Then redirect to checkout
+                window.location.href = 'cart.html';
+            });
+            
+            // Wishlist functionality
+            document.getElementById('addToWishlistBtn').addEventListener('click', function() {
+                this.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    alert('Product added to wishlist!');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    alert('Product removed from wishlist!');
+                }
+            });
+            
+            // Share functionality
+            document.getElementById('shareProductBtn').addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: document.getElementById('productTitle').textContent,
+                        url: window.location.href
+                    })
+                    .catch(error => console.log('Error sharing:', error));
+                } else {
+                    alert('Copy this link to share: ' + window.location.href);
+                }
+            });
+        });
+        
+        // Function to load related products
+        function loadRelatedProducts(products, category, currentProductId) {
+            const relatedProductsContainer = document.getElementById('relatedProducts');
+            
+            // Filter products by category and exclude current product
+            const relatedProducts = products
+                .filter(p => p.category === category && p.id !== currentProductId)
+                .slice(0, 4); // Limit to 4 related products
+            
+            if (relatedProducts.length === 0) {
+                // If no related products in same category, just show random products
+                relatedProducts = products
+                    .filter(p => p.id !== currentProductId)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 4);
+            }
+            
+            // Clear container
+            relatedProductsContainer.innerHTML = '';
+            
+            // Add related products
+            relatedProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image || 'placeholder.jpg'}" alt="${product.name}">
+                        <div class="product-overlay"></div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-info">
+                            <div class="product-price">$${product.price.toFixed(2)}</div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                ${product.rating || '4.5'}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-footer">
+                        <a href="product-template.html?id=${product.id}" class="button primary">View Product</a>
+                    </div>
+                `;
+                relatedProductsContainer.appendChild(productCard);
+            });
+        }
+        
+        // Helper functions for cart
+        function addToCart(item) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(cartItem => 
+                cartItem.id === item.id && 
+                cartItem.size === item.size && 
+                cartItem.color === item.color
+            );
+            
+            if (existingItemIndex !== -1) {
+                // Update quantity if item exists
+                cart[existingItemIndex].quantity += item.quantity;
+            } else {
+                // Add new item if it doesn't exist
+                cart.push(item);
+            }
+            
+            // Save cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            const cartCountElement = document.getElementById('cartCount');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+                
+                if (totalItems > 0) {
+                    cartCountElement.style.display = 'inline-flex';
+                } else {
+                    cartCountElement.style.display = 'none';
+                }
+            }
+        }
+        
+        // Initialize cart count on page load
+        updateCartCount();
+    </script>
+</body>
+</html>
+
