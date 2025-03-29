@@ -293,7 +293,7 @@ function loadFeaturedProducts() {
 
   products.forEach((product) => {
     productsHTML += `
-      <a href="product-template.html?id=${product.id}" class="product-card">
+      <a href="product-details.html?id=${product.id}" class="product-card">
         <div class="product-image">
           <img src="${product.image}" alt="${product.name}">
           <div class="product-overlay"></div>
@@ -684,8 +684,8 @@ function initProductsPage() {
             </svg>
           </button>
         </div>
-      `;
-    });
+      `
+    })
 
     filters.colors.forEach((color) => {
       filtersHTML += `
@@ -698,8 +698,8 @@ function initProductsPage() {
             </svg>
           </button>
         </div>
-      `;
-    });
+      `
+    })
 
     if (filters.minPrice > 20 || filters.maxPrice < 100) {
       filtersHTML += `
@@ -843,28 +843,28 @@ function initProductsPage() {
 
     sortedProducts.forEach((product) => {
       productsHTML += `
-        <a href="product-template.html?id=${product.id}" class="product-card">
-          <div class="product-image">
-            <img src="${product.image}" alt="${product.name}">
-            <div class="product-overlay"></div>
-          </div>
-          <div class="product-content">
-            <h3 class="product-title">${product.name}</h3>
-            <div class="product-info">
-              <span class="product-price">$${product.price.toFixed(2)}</span>
-              <div class="product-rating">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span>${product.rating}</span>
-              </div>
+      <a href="product-details.html?id=${product.id}" class="product-card">
+        <div class="product-image">
+          <img src="${product.image}" alt="${product.name}">
+          <div class="product-overlay"></div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">${product.name}</h3>
+          <div class="product-info">
+            <span class="product-price">$${product.price.toFixed(2)}</span>
+            <div class="product-rating">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>${product.rating}</span>
             </div>
           </div>
-          <div class="product-footer">
-            <button class="button outline add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
-          </div>
-        </a>
-      `
+        </div>
+        <div class="product-footer">
+          <button class="button outline add-to-cart-btn" data-id="${product.id}">Add to Cart</button>
+        </div>
+      </a>
+    `
     })
 
     productsGrid.innerHTML = productsHTML
@@ -1082,14 +1082,17 @@ function loadProductList() {
             <div class="admin-product-colors">
               <span>Colors:</span>
               <div class="color-dots">
-                ${product.colors.map(color => 
-                  `<span class="color-dot" style="background-color: ${color.toLowerCase()}" title="${color}"></span>`
-                ).join('')}
+                ${product.colors
+                  .map(
+                    (color) =>
+                      `<span class="color-dot" style="background-color: ${color.toLowerCase()}" title="${color}"></span>`,
+                  )
+                  .join("")}
               </div>
             </div>
             <div class="admin-product-featured">
               <label class="checkbox-label">
-                <input type="checkbox" class="toggle-featured" data-id="${product.id}" ${product.featured ? 'checked' : ''}>
+                <input type="checkbox" class="toggle-featured" data-id="${product.id}" ${product.featured ? "checked" : ""}>
                 Featured
               </label>
             </div>
@@ -1117,7 +1120,7 @@ function loadProductList() {
     `
   })
 
-  productsHTML += '</div>'
+  productsHTML += "</div>"
   productList.innerHTML = productsHTML
 
   // Add event listeners to delete buttons
@@ -1135,34 +1138,34 @@ function loadProductList() {
       openEditProductModal(productId)
     })
   })
-  
+
   // Add event listeners to featured toggles
   document.querySelectorAll(".toggle-featured").forEach((checkbox) => {
-    checkbox.addEventListener("change", function() {
+    checkbox.addEventListener("change", function () {
       const productId = this.dataset.id
       const isFeatured = this.checked
-      
+
       // Update product in localStorage
       const products = JSON.parse(localStorage.getItem("products")) || []
-      const updatedProducts = products.map(product => {
+      const updatedProducts = products.map((product) => {
         if (product.id === productId) {
           return { ...product, featured: isFeatured }
         }
         return product
       })
-      
+
       localStorage.setItem("products", JSON.stringify(updatedProducts))
-      
+
       // Log activity
-      const product = products.find(p => p.id === productId)
+      const product = products.find((p) => p.id === productId)
       addToActivityLog(
-        "Product Updated", 
-        `${isFeatured ? 'Added' : 'Removed'} "${product.name}" ${isFeatured ? 'to' : 'from'} featured products`
+        "Product Updated",
+        `${isFeatured ? "Added" : "Removed"} "${product.name}" ${isFeatured ? "to" : "from"} featured products`,
       )
-      
+
       showNotification(
-        `Product "${product.name}" ${isFeatured ? 'added to' : 'removed from'} featured products.`,
-        "success"
+        `Product "${product.name}" ${isFeatured ? "added to" : "removed from"} featured products.`,
+        "success",
       )
     })
   })
@@ -1171,45 +1174,45 @@ function loadProductList() {
 // Function to open edit product modal
 function openEditProductModal(productId) {
   const products = JSON.parse(localStorage.getItem("products")) || []
-  const product = products.find(p => p.id === productId)
-  
+  const product = products.find((p) => p.id === productId)
+
   if (!product) return
-  
+
   // Get modal elements
   const addProductModal = document.getElementById("add-product-modal")
   const modalTitle = addProductModal.querySelector(".admin-modal-header h2")
   const form = document.getElementById("add-product-form")
   const submitButton = form.querySelector('button[type="submit"]')
-  
+
   // Update modal for editing
   modalTitle.textContent = "Edit Product"
   submitButton.textContent = "Update Product"
-  
+
   // Fill form with product data
   document.getElementById("product-name").value = product.name
   document.getElementById("product-price").value = product.price
   document.getElementById("product-category").value = product.category
   document.getElementById("product-description").value = product.description
   document.getElementById("product-image").value = product.image
-  
+
   // Set image preview
   const imagePreview = document.getElementById("image-preview")
   imagePreview.innerHTML = `<img src="${product.image}" alt="Preview" style="max-width: 100%; max-height: 200px;">`
-  
+
   // Check size checkboxes
   const sizeCheckboxes = document.querySelectorAll('input[name="product-sizes"]')
-  sizeCheckboxes.forEach(checkbox => {
+  sizeCheckboxes.forEach((checkbox) => {
     checkbox.checked = product.sizes.includes(checkbox.value)
   })
-  
+
   // Check color checkboxes
   const colorCheckboxes = document.querySelectorAll('input[name="product-colors"]')
-  colorCheckboxes.forEach(checkbox => {
+  colorCheckboxes.forEach((checkbox) => {
     checkbox.checked = product.colors.includes(checkbox.value)
   })
-  
+
   // Add featured checkbox if it doesn't exist
-  let featuredCheckbox = document.getElementById("product-featured")
+  const featuredCheckbox = document.getElementById("product-featured")
   if (!featuredCheckbox) {
     const featuredGroup = document.createElement("div")
     featuredGroup.className = "admin-form-group"
@@ -1217,21 +1220,21 @@ function openEditProductModal(productId) {
       <label for="product-featured">Featured</label>
       <div class="checkbox-group">
         <label class="checkbox-label">
-          <input type="checkbox" id="product-featured" ${product.featured ? 'checked' : ''}> Show on homepage
+          <input type="checkbox" id="product-featured" ${product.featured ? "checked" : ""}> Show on homepage
         </label>
       </div>
     `
-    
+
     // Insert before the form actions
     const formActions = form.querySelector(".form-actions")
     form.insertBefore(featuredGroup, formActions)
   } else {
     featuredCheckbox.checked = product.featured
   }
-  
+
   // Store product ID in form for submission
   form.dataset.editId = productId
-  
+
   // Show modal
   addProductModal.style.display = "block"
 }
@@ -1243,7 +1246,7 @@ function loadCouponList() {
 
   // Get coupons from localStorage
   const coupons = JSON.parse(localStorage.getItem("coupons")) || []
-  
+
   // Update coupon count in dashboard
   const couponCount = document.getElementById("coupon-count")
   if (couponCount) {
@@ -1265,8 +1268,8 @@ function loadCouponList() {
         <div class="admin-coupon-code">${coupon.code}</div>
         <div class="admin-coupon-details">
           <div class="admin-coupon-discount">${coupon.discount}% off</div>
-          <div class="admin-coupon-status ${coupon.active ? 'active' : 'inactive'}">
-            ${coupon.active ? 'Active' : 'Inactive'}
+          <div class="admin-coupon-status ${coupon.active ? "active" : "inactive"}">
+            ${coupon.active ? "Active" : "Inactive"}
           </div>
           <div class="admin-coupon-date">Created: ${createdDate}</div>
         </div>
@@ -1280,7 +1283,7 @@ function loadCouponList() {
     `
   })
 
-  couponsHTML += '</div>'
+  couponsHTML += "</div>"
   couponList.innerHTML = couponsHTML
 
   // Add event listeners to coupon buttons
@@ -1339,7 +1342,7 @@ function loadCouponList() {
 function openDeleteConfirmationModal(productId) {
   productToDelete = productId
   const deleteConfirmationModal = document.getElementById("delete-confirmation-modal")
-  
+
   if (deleteConfirmationModal) {
     deleteConfirmationModal.style.display = "block"
   }
@@ -1385,6 +1388,84 @@ function confirmDeleteProduct() {
 }
 
 // Initialize
+
+// Add this function to update the cart count display
+function updateCartCountDisplay() {
+  const cartItems = JSON.parse(localStorage.getItem("cart")) || []
+  const cartCountElements = document.querySelectorAll(".cart-count")
+
+  cartCountElements.forEach((element) => {
+    element.textContent = cartItems.reduce((total, item) => total + item.quantity, 0)
+
+    // Make the cart count visible if there are items
+    if (cartItems.length > 0) {
+      element.style.display = "flex"
+    } else {
+      element.style.display = "none"
+    }
+  })
+}
+
+// Add this function to initialize cart count on all pages
+function initCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+  const count = cart.reduce((total, item) => total + item.quantity, 0)
+
+  const cartCountElements = document.querySelectorAll(".cart-count")
+  cartCountElements.forEach((element) => {
+    element.textContent = count
+
+    if (count > 0) {
+      element.style.display = "flex"
+    } else {
+      element.style.display = "none"
+    }
+  })
+}
+
+// Call this function when the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize cart count
+  initCartCount()
+
+  // Set current year in footer
+  const currentYearElement = document.getElementById("currentYear")
+  if (currentYearElement) {
+    currentYearElement.textContent = new Date().getFullYear()
+  }
+
+  // Theme toggle functionality
+  const themeToggle = document.getElementById("themeToggle")
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark")
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light")
+    })
+  }
+
+  // Check for saved theme preference
+  const savedTheme = localStorage.getItem("theme")
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark")
+  }
+
+  // Mobile menu functionality
+  const menuButton = document.getElementById("menuButton")
+  const mobileMenu = document.getElementById("mobileMenu")
+  const closeMenu = document.getElementById("closeMenu")
+
+  if (menuButton && mobileMenu && closeMenu) {
+    menuButton.addEventListener("click", () => {
+      mobileMenu.classList.add("active")
+    })
+
+    closeMenu.addEventListener("click", () => {
+      mobileMenu.classList.remove("active")
+    })
+  }
+})
+
+// Call updateCartCount when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   // Theme Toggle
   initTheme()
@@ -1428,35 +1509,35 @@ document.addEventListener("DOMContentLoaded", () => {
     loadCouponList()
     displayActivityLog()
     updateRecentActivity()
-    
+
     // Set current date
     const currentDate = document.getElementById("current-date")
     if (currentDate) {
-      currentDate.textContent = new Date().toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      currentDate.textContent = new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       })
     }
-    
+
     // Tab navigation
-    const navLinks = document.querySelectorAll('.admin-nav-link')
-    const tabContents = document.querySelectorAll('.admin-tab')
-    
-    navLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
+    const navLinks = document.querySelectorAll(".admin-nav-link")
+    const tabContents = document.querySelectorAll(".admin-tab")
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", function (e) {
         e.preventDefault()
-        
+
         // Remove active class from all links and tabs
-        navLinks.forEach(l => l.classList.remove('active'))
-        tabContents.forEach(t => t.classList.remove('active'))
-        
+        navLinks.forEach((l) => l.classList.remove("active"))
+        tabContents.forEach((t) => t.classList.remove("active"))
+
         // Add active class to clicked link and corresponding tab
-        this.classList.add('active')
-        document.getElementById(`${this.dataset.tab}-tab`).classList.add('active')
+        this.classList.add("active")
+        document.getElementById(`${this.dataset.tab}-tab`).classList.add("active")
       })
     })
-    
+
     // Add product form submission
     const addProductForm = document.getElementById("add-product-form")
     if (addProductForm) {
@@ -1490,7 +1571,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const category = document.getElementById("product-category").value
         const description = document.getElementById("product-description").value
         const image = document.getElementById("product-image").value
-        
+
         // Get featured status
         const featuredCheckbox = document.getElementById("product-featured")
         const featured = featuredCheckbox ? featuredCheckbox.checked : false
@@ -1524,10 +1605,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Check if we're editing or adding a new product
         const editId = this.dataset.editId
-        
+
         if (editId) {
           // Update existing product
-          const updatedProducts = products.map(product => {
+          const updatedProducts = products.map((product) => {
             if (product.id === editId) {
               return {
                 ...product,
@@ -1538,18 +1619,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 colors,
                 image,
                 description,
-                featured
+                featured,
               }
             }
             return product
           })
-          
+
           // Save to localStorage
           localStorage.setItem("products", JSON.stringify(updatedProducts))
-          
+
           // Log activity
           addToActivityLog("Product Updated", `Updated product: ${name}`)
-          
+
           // Show notification
           showNotification(`Product "${name}" updated successfully!`, "success")
         } else {
@@ -1564,7 +1645,7 @@ document.addEventListener("DOMContentLoaded", () => {
             colors,
             image: image || "https://placehold.co/400x400",
             description,
-            featured
+            featured,
           }
 
           // Add to products array
@@ -1575,7 +1656,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Log activity
           addToActivityLog("Product Added", `Added new product: ${name} (${category}) at $${price}`)
-          
+
           // Show notification
           showNotification(`Product "${name}" added successfully!`, "success")
         }
@@ -1588,14 +1669,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (addProductModal) {
           addProductModal.style.display = "none"
         }
-        
+
         // Reset form and clear edit ID
         this.reset()
         this.dataset.editId = ""
         imagePreview.innerHTML = ""
-        
+
         // Remove featured checkbox if it was added for editing
-        const featuredGroup = document.querySelector('.admin-form-group:has(#product-featured)')
+        const featuredGroup = document.querySelector(".admin-form-group:has(#product-featured)")
         if (featuredGroup) {
           featuredGroup.remove()
         }
@@ -1664,102 +1745,405 @@ document.addEventListener("DOMContentLoaded", () => {
         showNotification(`Coupon "${code}" added successfully!`, "success")
       })
     }
-    
+
     // Modal event listeners
     const addProductButton = document.getElementById("add-product-button")
     const closeProductModal = document.getElementById("close-product-modal")
     const cancelProduct = document.getElementById("cancel-product")
-    
+
     if (addProductButton) {
-      addProductButton.addEventListener("click", function() {
+      addProductButton.addEventListener("click", () => {
         const addProductModal = document.getElementById("add-product-modal")
         const modalTitle = addProductModal.querySelector(".admin-modal-header h2")
         const form = document.getElementById("add-product-form")
         const submitButton = form.querySelector('button[type="submit"]')
-        
+
         // Reset form for adding new product
         modalTitle.textContent = "Add New Product"
         submitButton.textContent = "Add Product"
         form.reset()
         form.dataset.editId = ""
         document.getElementById("image-preview").innerHTML = ""
-        
+
         // Remove featured checkbox if it was added for editing
-        const featuredGroup = document.querySelector('.admin-form-group:has(#product-featured)')
+        const featuredGroup = document.querySelector(".admin-form-group:has(#product-featured)")
         if (featuredGroup) {
           featuredGroup.remove()
         }
-        
+
         addProductModal.style.display = "block"
       })
     }
-    
+
     if (closeProductModal) {
-      closeProductModal.addEventListener("click", function() {
+      closeProductModal.addEventListener("click", () => {
         document.getElementById("add-product-modal").style.display = "none"
       })
     }
-    
+
     if (cancelProduct) {
-      cancelProduct.addEventListener("click", function() {
+      cancelProduct.addEventListener("click", () => {
         document.getElementById("add-product-modal").style.display = "none"
       })
     }
-    
+
     // Delete confirmation modal
     const closeDeleteModal = document.getElementById("close-delete-modal")
     const cancelDelete = document.getElementById("cancel-delete")
     const confirmDelete = document.getElementById("confirm-delete")
-    
+
     if (closeDeleteModal) {
       closeDeleteModal.addEventListener("click", closeDeleteConfirmationModal)
     }
-    
+
     if (cancelDelete) {
       cancelDelete.addEventListener("click", closeDeleteConfirmationModal)
     }
-    
+
     if (confirmDelete) {
       confirmDelete.addEventListener("click", confirmDeleteProduct)
     }
-    
+
     // Coupon modal
     const addCouponButton = document.getElementById("add-coupon-button")
     const closeCouponModal = document.getElementById("close-coupon-modal")
     const cancelCoupon = document.getElementById("cancel-coupon")
-    
+
     if (addCouponButton) {
-      addCouponButton.addEventListener("click", function() {
+      addCouponButton.addEventListener("click", () => {
         document.getElementById("add-coupon-modal").style.display = "block"
       })
     }
-    
+
     if (closeCouponModal) {
-      closeCouponModal.addEventListener("click", function() {
+      closeCouponModal.addEventListener("click", () => {
         document.getElementById("add-coupon-modal").style.display = "none"
       })
     }
-    
+
     if (cancelCoupon) {
-      cancelCoupon.addEventListener("click", function() {
+      cancelCoupon.addEventListener("click", () => {
         document.getElementById("add-coupon-modal").style.display = "none"
       })
     }
   }
-  
+
   // Update cart count on page load
-  updateCartCount()
+  updateCartCountDisplay()
 })
 
-// Cart Functionality
-function initCart() {
-  // You can add cart-related functionality here, such as displaying cart items,
-  // updating quantities, and calculating totals.
+// Call updateCartCount when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCountDisplay()
+
+  // Initialize theme
+  const savedTheme = localStorage.getItem("theme") || "light"
+  document.documentElement.setAttribute("data-theme", savedTheme)
+
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
+  const mobileMenu = document.getElementById("mobile-menu")
+
+  if (mobileMenuToggle && mobileMenu) {
+    mobileMenuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("active")
+    })
+  }
+
+  // Theme toggle
+  const themeToggle = document.getElementById("theme-toggle")
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme")
+      const newTheme = currentTheme === "light" ? "dark" : "light"
+
+      document.documentElement.setAttribute("data-theme", newTheme)
+      localStorage.setItem("theme", newTheme)
+    })
+  }
+
+  // Initialize product detail page if on product detail page
+  const productDetailContainer = document.querySelector(".product-detail-container")
+  if (productDetailContainer) {
+    initProductDetail()
+  }
+
+  // Initialize cart page if on cart page
+  const cartContainer = document.querySelector(".cart-container")
+  if (cartContainer) {
+    initCart()
+  }
+
+  // Initialize products page if on products page
+  const productsContainer = document.querySelector(".products-container")
+  if (productsContainer) {
+    initProducts()
+  }
+})
+
+// Add to cart function
+function addToCartDetail(productId, productName, price, image, size = "M", quantity = 1) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+
+  // Check if product already exists in cart with the same size
+  const existingItemIndex = cart.findIndex((item) => item.id === productId && item.size === size)
+
+  if (existingItemIndex !== -1) {
+    // Update quantity if product already exists
+    cart[existingItemIndex].quantity += quantity
+  } else {
+    // Add new item to cart
+    cart.push({
+      id: productId,
+      name: productName,
+      price: price,
+      image: image,
+      size: size,
+      quantity: quantity,
+    })
+  }
+
+  // Save cart to localStorage
+  localStorage.setItem("cart", JSON.stringify(cart))
+
+  // Update cart count display
+  updateCartCountDisplay()
+
+  // Show notification
+  showNotification("Product added to cart!")
 }
 
-// Product Detail Functionality
+// Function to initialize product detail page
 function initProductDetail() {
-  // You can add product detail page functionality here, such as displaying
-  // product information, handling size and color selection, and adding the
-  // product to the cart.
+  const sizeButtons = document.querySelectorAll(".size-btn")
+  const quantityInput = document.getElementById("quantity")
+  const addToCartBtn = document.getElementById("add-to-cart-btn")
+
+  // Size selection
+  if (sizeButtons) {
+    sizeButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        // Remove active class from all buttons
+        sizeButtons.forEach((btn) => btn.classList.remove("active"))
+        // Add active class to clicked button
+        this.classList.add("active")
+      })
+    })
+  }
+
+  // Add to cart button
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener("click", function () {
+      const productId = this.getAttribute("data-product-id")
+      const productName = this.getAttribute("data-product-name")
+      const price = Number.parseFloat(this.getAttribute("data-price"))
+      const image = this.getAttribute("data-image")
+
+      // Get selected size
+      const selectedSize = document.querySelector(".size-btn.active")
+      const size = selectedSize ? selectedSize.getAttribute("data-size") : "M"
+
+      // Get quantity
+      const quantity = quantityInput ? Number.parseInt(quantityInput.value) : 1
+
+      // Add to cart
+      addToCartDetail(productId, productName, price, image, size, quantity)
+    })
+  }
 }
+
+// Function to initialize cart page
+function initCart() {
+  renderCart()
+
+  // Update price when quantity changes
+  document.addEventListener("change", (e) => {
+    if (e.target && e.target.classList.contains("cart-item-quantity")) {
+      updateCartItemQuantity(e.target)
+    }
+  })
+
+  // Remove item when remove button is clicked
+  document.addEventListener("click", (e) => {
+    if (e.target && e.target.classList.contains("remove-item-btn")) {
+      removeCartItem(e.target)
+    }
+  })
+}
+
+// Function to render cart items
+function renderCart() {
+  const cartItemsContainer = document.querySelector(".cart-items")
+  const cartSummaryContainer = document.querySelector(".cart-summary")
+
+  if (!cartItemsContainer) return
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML =
+      '<div class="empty-cart"><p>Your cart is empty</p><a href="products.html" class="btn">Continue Shopping</a></div>'
+    if (cartSummaryContainer) {
+      cartSummaryContainer.style.display = "none"
+    }
+    return
+  }
+
+  let cartHTML = ""
+  let subtotal = 0
+
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * item.quantity
+    subtotal += itemTotal
+
+    cartHTML += `
+      <div class="cart-item" data-index="${index}">
+        <div class="cart-item-image">
+          <img src="${item.image}" alt="${item.name}">
+        </div>
+        <div class="cart-item-details">
+          <h3>${item.name}</h3>
+          <p>Size: ${item.size}</p>
+          <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+          <div class="cart-item-actions">
+            <div class="quantity-control">
+              <button class="quantity-btn minus" onclick="decrementQuantity(${index})">-</button>
+              <input type="number" min="1" value="${item.quantity}" class="cart-item-quantity" data-index="${index}" data-price="${item.price}">
+              <button class="quantity-btn plus" onclick="incrementQuantity(${index})">+</button>
+            </div>
+            <button class="remove-item-btn" data-index="${index}">Remove</button>
+          </div>
+        </div>
+        <div class="cart-item-total">
+          <p>$${itemTotal.toFixed(2)}</p>
+        </div>
+      </div>
+    `
+  })
+
+  cartItemsContainer.innerHTML = cartHTML
+
+  // Update cart summary
+  if (cartSummaryContainer) {
+    cartSummaryContainer.style.display = "block"
+    const shipping = subtotal > 100 ? 0 : 10
+    const total = subtotal + shipping
+
+    cartSummaryContainer.innerHTML = `
+      <h2>Order Summary</h2>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>$${subtotal.toFixed(2)}</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>${shipping === 0 ? "Free" : "$" + shipping.toFixed(2)}</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>$${total.toFixed(2)}</span>
+      </div>
+      <button class="btn checkout-btn">Proceed to Checkout</button>
+    `
+  }
+
+  // Update cart count
+  updateCartCountDisplay()
+}
+
+// Function to update cart item quantity
+function updateCartItemQuantity(input) {
+  const index = Number.parseInt(input.getAttribute("data-index"))
+  const newQuantity = Number.parseInt(input.value)
+
+  if (newQuantity < 1) {
+    input.value = 1
+    return
+  }
+
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+
+  if (index >= 0 && index < cart.length) {
+    cart[index].quantity = newQuantity
+    localStorage.setItem("cart", JSON.stringify(cart))
+    renderCart()
+  }
+}
+
+// Function to remove cart item
+function removeCartItem(button) {
+  const index = Number.parseInt(button.getAttribute("data-index"))
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+
+  if (index >= 0 && index < cart.length) {
+    cart.splice(index, 1)
+    localStorage.setItem("cart", JSON.stringify(cart))
+    renderCart()
+    updateCartCountDisplay()
+  }
+}
+
+// Increment quantity function
+function incrementQuantity(index) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+
+  if (index >= 0 && index < cart.length) {
+    cart[index].quantity += 1
+    localStorage.setItem("cart", JSON.stringify(cart))
+    renderCart()
+  }
+}
+
+// Decrement quantity function
+function decrementQuantity(index) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
+
+  if (index >= 0 && index < cart.length && cart[index].quantity > 1) {
+    cart[index].quantity -= 1
+    localStorage.setItem("cart", JSON.stringify(cart))
+    renderCart()
+  }
+}
+
+// Function to initialize products page
+function initProducts() {
+  // Filter and sort functionality
+  const filterForm = document.getElementById("filter-form")
+  const sortSelect = document.getElementById("sort")
+
+  if (filterForm) {
+    filterForm.addEventListener("submit", (e) => {
+      e.preventDefault()
+      filterProducts()
+    })
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+      sortProducts()
+    })
+  }
+}
+
+// Function to show notification
+function displayNotification(message) {
+  const notification = document.createElement("div")
+  notification.className = "notification"
+  notification.textContent = message
+
+  document.body.appendChild(notification)
+
+  // Show notification
+  setTimeout(() => {
+    notification.classList.add("show")
+  }, 10)
+
+  // Hide and remove notification after 3 seconds
+  setTimeout(() => {
+    notification.classList.remove("show")
+    setTimeout(() => {
+      document.body.removeChild(notification)
+    }, 300)
+  }, 3000)
+}
+
