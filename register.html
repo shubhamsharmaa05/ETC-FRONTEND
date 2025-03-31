@@ -6,6 +6,7 @@
   <title>Register - ETCETRA</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
   <div class="site-wrapper">
@@ -155,12 +156,7 @@
                 <span>or</span>
               </div>
               
-              <button type="button" class="button outline social-auth-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                </svg>
-                Sign up with Google
-              </button>
+              <div  id="googleSignInButton"></div>
             </form>
             
             <div class="auth-footer">
@@ -243,6 +239,89 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    function handleCredentialResponse(response) {
+        console.log("Google ID Token:", response.credential); // Check if it's a JWT token
+
+        // Send token to backend
+        fetch("http://localhost:8000/api/v1/users/auth/signUp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ token: response.credential }),
+        })
+        .then(res => res.json())
+        .then(data => {console.log("User data:", data),window.location.href = "index.html";})
+        .catch(error => console.error("Error:", error));
+    }
+
+    window.onload = function () {
+        google.accounts.id.initialize({
+            client_id: "921058034806-5e0mktavr81tadlmiidtcpgeifkd05fo.apps.googleusercontent.com",
+            callback: handleCredentialResponse,
+        });
+
+        // Render Google Sign-In Button
+        google.accounts.id.renderButton(
+            document.getElementById("googleSignInButton"),
+            { theme: "outline", size: "large" }
+        );
+    };
+  </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector(".auth-form");
+
+      form.addEventListener("submit", async function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Collect form data
+          const formData = {
+              firstName: document.getElementById("firstName").value,
+              lastName: document.getElementById("lastName").value,
+              email: document.getElementById("email").value,
+              password: document.getElementById("password").value,
+              confirmPassword: document.getElementById("confirmPassword").value,
+              termsAccepted: document.getElementById("terms").checked
+          };
+          console.log(formData.password);
+          console.log(formData.confirmPassword);
+          // Basic validation
+          if (formData.password !== formData.confirmPassword) {
+              alert("Passwords do not match");
+              return;
+          }
+
+          if (!formData.termsAccepted) {
+              alert("You must accept the terms and conditions");
+              return;
+          }
+
+          try {
+              const response = await fetch("http://localhost:8000/api/v1/users/signUp", {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(formData)
+              });
+
+              const result = await response.json();
+              
+              if (response.ok) {
+                  alert("Account created successfully");
+                  window.location.href = "index.html"; // Redirect to dashboard or login page
+              } else {
+                  alert(result.message || "Registration failed");
+              }
+          } catch (error) {
+              console.error("Error during registration:", error);
+              alert("Something went wrong. Please try again.");
+          }
+      });
+  });
+</script>
 </body>
 </html>
 
