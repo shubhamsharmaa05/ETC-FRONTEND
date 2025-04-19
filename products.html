@@ -55,18 +55,13 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
-        <a href="cart.html" class="icon-button" aria-label="Cart">
+        <a href="cart.html" class="icon-btn cart-icon" aria-label="Cart">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
-        </a>
-        <a href="profile.html" class="icon-button" aria-label="Account">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
+          <span id="cartCount" class="cart-count" style="background-color: red;"></span>
         </a>
       </div>
     </div>
@@ -110,25 +105,57 @@
     <div class="products-header">
       <div class="products-title">
         <h1>Products</h1>
-        <p class="results-count"><span id="productCount">0</span> results</p>
+        <!-- <p class="results-count"><span id="productCount">0</span> results</p> -->
       </div>
       
       <div class="products-actions">
-        <button id="filterButton" class="filter-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-          </svg>
-          Filters
-        </button>
+          <div class="productSection">
+            <img class="ProductsImage" src="../img/OV5666.webp">
+            <div class="priceSection">
+              <h3>
+                Purple Vortex Oversized T-Shirt
+              </h3>
+              <h3>
+                $120
+              </h3>
+            </div>
+          </div>
+          <div class="productSection">
+            <img class="ProductsImage" src="../img/OV5666.webp">
+            <div class="priceSection">
+              <h3>
+                Purple Vortex Oversized T-Shirt
+              </h3>
+              <h3>
+                $120
+              </h3>
+            </div>
+          </div>
+          <div class="productSection">
+            <img class="ProductsImage" src="../img/OV5666.webp">
+            <div class="priceSection">
+              <h3>
+                Purple Vortex Oversized T-Shirt
+              </h3>
+              <h3>
+                $120
+              </h3>
+            </div>
+          </div>
+          <div class="productSection">
+            <img class="ProductsImage" src="../img/OV5666.webp">
+            <div class="priceSection">
+              <h3>
+                Purple Vortex Oversized T-Shirt
+              </h3>
+              <h3>
+                $120
+              </h3>
+            </div>
+          </div>
+      </div>
         
-        <div class="sort-dropdown">
-          <select id="sortSelect" class="sort-input">
-            <option value="featured">Featured</option>
-            <option value="price-low-high">Price: Low to High</option>
-            <option value="price-high-low">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
-          </select>
-        </div>
+        
       </div>
     </div>
     
@@ -321,6 +348,15 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+  document.querySelectorAll('.productSection').forEach(product => {
+    product.addEventListener('click', () => {
+      const productId = product.getAttribute('data-id');
+      window.location.href = `product-details.html?id=${productId}`;
+    });
+  });
+</script>
+
 </body>
 </html>
 

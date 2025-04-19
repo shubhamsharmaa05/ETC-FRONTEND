@@ -18,28 +18,19 @@
             <h1>ETCETRA</h1>
           </a>
         </div>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="products.html" class="active">Products</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </nav>
+        
         <div class="header-actions">
           <button id="themeToggle" class="icon-btn">
             <i class="fas fa-moon"></i>
           </button>
-          <a href="login.html" class="icon-btn">
-            <i class="fas fa-user"></i>
+          <a href="cart.html" class="icon-btn cart-icon" aria-label="Cart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span id="cartCount" class="cart-count" style="background-color: red;"></span>
           </a>
-          <a href="cart.html" class="icon-btn cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count" id="cartCount">0</span>
-          </a>
-          <button id="menuButton" class="icon-btn mobile-only">
-            <i class="fas fa-bars"></i>
-          </button>
         </div>
       </div>
     </div>
@@ -72,17 +63,15 @@
       <div class="product-detail-container">
         <div class="product-gallery">
           <div class="main-image-container">
-            <img src="/placeholder.svg?height=600&width=600" alt="Product Name" id="main-product-image">
-            <div class="image-zoom-overlay"></div>
-            <button class="gallery-nav prev" id="gallery-prev">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="gallery-nav next" id="gallery-next">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-          <div class="thumbnail-gallery" id="thumbnail-gallery">
-            <!-- Thumbnails will be populated by JavaScript -->
+            <img src="../img/OV5118.webp" alt="Product Name" id="main-product-image">
+            <div>
+              <button class="gallery-nav prev" id="gallery-prev">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="gallery-nav next" id="gallery-next">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
           </div>
         </div>
         
@@ -96,18 +85,12 @@
           <h1 class="product-title" id="product-name">Product Name</h1>
           
           <div class="product-meta">
-            <div class="product-rating">
-              <div class="stars" id="product-rating-stars">
-                <!-- Stars will be populated by JavaScript -->
-              </div>
-              <a href="#reviews-panel" class="rating-count" id="product-rating-count">(0 reviews)</a>
-            </div>
             <div class="product-sku">SKU: <span id="product-sku">ETR-12345</span></div>
           </div>
           
           <div class="product-price">
-            <span class="current-price" id="product-price">$0.00</span>
-            <span class="original-price" id="product-original-price">$0.00</span>
+            $<span class="current-price" id="product-price">10.00</span>
+            <span class="original-price" id="product-original-price">20.00</span>
             <span class="discount-badge" id="product-discount">-0%</span>
           </div>
           
@@ -122,19 +105,18 @@
           <div class="product-options">
             <div class="option-group">
               <label>Size</label>
-              <div class="size-buttons" id="size-options">
-                <!-- Size options will be populated by JavaScript -->
-              </div>
-              <a href="size-guide.html" class="size-guide-link">Size Guide <i class="fas fa-ruler"></i></a>
+              <a href="size-guide.html" class="size-guide-link" style="color: black">Size Guide <i class="fas fa-ruler"></i></a>
             </div>
-            
-            <div class="option-group">
-              <label>Color</label>
-              <div class="color-buttons" id="color-options">
-                <!-- Color options will be populated by JavaScript -->
-              </div>
-            </div>
-            
+            <label for="size">Choose Size:</label>
+              <select name="size" id="size">
+                <option value="">--Select Size--</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+              </select>
             <div class="option-group">
               <label>Quantity</label>
               <div class="quantity-control">
@@ -152,15 +134,6 @@
           <div class="product-actions">
             <button id="add-to-cart-btn" class="btn primary-btn">
               <i class="fas fa-shopping-cart"></i> Add to Cart
-            </button>
-            <button id="buy-now-btn" class="btn secondary-btn">
-              <i class="fas fa-bolt"></i> Buy Now
-            </button>
-            <button id="wishlist-btn" class="icon-btn wishlist-btn">
-              <i class="far fa-heart"></i>
-            </button>
-            <button id="share-btn" class="icon-btn share-btn">
-              <i class="fas fa-share-alt"></i>
             </button>
           </div>
           
@@ -201,7 +174,7 @@
         <div class="tabs-header">
           <button class="tab-btn active" data-tab="description">Description</button>
           <button class="tab-btn" data-tab="specifications">Specifications</button>
-          <button class="tab-btn" data-tab="reviews">Reviews <span id="review-count-tab">(0)</span></button>
+          <button class="tab-btn" data-tab="reviews">Reviews <span id="review-count-tab"></span></button>
           <button class="tab-btn" data-tab="shipping">Shipping & Returns</button>
         </div>
         
@@ -235,192 +208,8 @@
             </div>
           </div>
           
-          <div class="tab-panel" id="reviews-panel">
-            <div class="tab-content">
-              <div class="reviews-header">
-                <h3>Customer Reviews</h3>
-                <div class="reviews-summary">
-                  <div class="average-rating">
-                    <div class="rating-number" id="average-rating">0.0</div>
-                    <div class="rating-stars" id="average-rating-stars">
-                      <!-- Average rating stars will be populated by JavaScript -->
-                    </div>
-                    <div class="rating-count" id="total-reviews">Based on 0 reviews</div>
-                  </div>
-                  <div class="rating-bars">
-                    <!-- Rating distribution will be populated by JavaScript -->
-                    <div class="rating-bar-row">
-                      <span class="rating-label">5 <i class="fas fa-star"></i></span>
-                      <div class="rating-bar">
-                        <div class="rating-fill" id="rating-5-fill" style="width: 0%"></div>
-                      </div>
-                      <span class="rating-percent" id="rating-5-percent">0%</span>
-                    </div>
-                    <div class="rating-bar-row">
-                      <span class="rating-label">4 <i class="fas fa-star"></i></span>
-                      <div class="rating-bar">
-                        <div class="rating-fill" id="rating-4-fill" style="width: 0%"></div>
-                      </div>
-                      <span class="rating-percent" id="rating-4-percent">0%</span>
-                    </div>
-                    <div class="rating-bar-row">
-                      <span class="rating-label">3 <i class="fas fa-star"></i></span>
-                      <div class="rating-bar">
-                        <div class="rating-fill" id="rating-3-fill" style="width: 0%"></div>
-                      </div>
-                      <span class="rating-percent" id="rating-3-percent">0%</span>
-                    </div>
-                    <div class="rating-bar-row">
-                      <span class="rating-label">2 <i class="fas fa-star"></i></span>
-                      <div class="rating-bar">
-                        <div class="rating-fill" id="rating-2-fill" style="width: 0%"></div>
-                      </div>
-                      <span class="rating-percent" id="rating-2-percent">0%</span>
-                    </div>
-                    <div class="rating-bar-row">
-                      <span class="rating-label">1 <i class="fas fa-star"></i></span>
-                      <div class="rating-bar">
-                        <div class="rating-fill" id="rating-1-fill" style="width: 0%"></div>
-                      </div>
-                      <span class="rating-percent" id="rating-1-percent">0%</span>
-                    </div>
-                  </div>
-                </div>
-                <button id="write-review-btn" class="btn primary-btn">
-                  <i class="fas fa-pen"></i> Write a Review
-                </button>
-              </div>
-              
-              <div class="reviews-filter">
-                <div class="filter-options">
-                  <label for="reviews-sort">Sort by:</label>
-                  <select id="reviews-sort" class="filter-select">
-                    <option value="newest">Newest</option>
-                    <option value="highest">Highest Rating</option>
-                    <option value="lowest">Lowest Rating</option>
-                    <option value="helpful">Most Helpful</option>
-                  </select>
-                </div>
-                <div class="filter-options">
-                  <label for="reviews-filter">Filter:</label>
-                  <select id="reviews-filter" class="filter-select">
-                    <option value="all">All Stars</option>
-                    <option value="5">5 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="2">2 Stars</option>
-                    <option value="1">1 Star</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div class="reviews-list" id="reviews-list">
-                <!-- Reviews will be populated by JavaScript -->
-                <div class="no-reviews" id="no-reviews">
-                  <div class="empty-state">
-                    <i class="far fa-comment-alt"></i>
-                    <p>There are no reviews yet. Be the first to review this product!</p>
-                    <button class="btn secondary-btn" onclick="document.getElementById('write-review-btn').click()">
-                      Write a Review
-                    </button>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="reviews-pagination" id="reviews-pagination">
-                <!-- Pagination will be populated by JavaScript if needed -->
-              </div>
-            </div>
-          </div>
           
-          <div class="tab-panel" id="shipping-panel">
-            <div class="tab-content">
-              <h3>Shipping Information</h3>
-              <div class="shipping-info">
-                <div class="info-section">
-                  <h4><i class="fas fa-truck"></i> Delivery Options</h4>
-                  <ul>
-                    <li><strong>Standard Shipping:</strong> 3-5 business days (Free on orders over $100)</li>
-                    <li><strong>Express Shipping:</strong> 1-2 business days ($15)</li>
-                    <li><strong>Same Day Delivery:</strong> Available in select areas (Order before 11am)</li>
-                  </ul>
-                </div>
-                
-                <div class="info-section">
-                  <h4><i class="fas fa-undo"></i> Return Policy</h4>
-                  <p>We offer a 30-day return policy on all unworn items in original condition with tags attached. Return shipping is free for exchanges.</p>
-                  <p>To initiate a return, please visit our <a href="returns.html">Returns Center</a> or contact our customer service team.</p>
-                </div>
-                
-                <div class="info-section">
-                  <h4><i class="fas fa-globe-americas"></i> International Shipping</h4>
-                  <p>We ship to over 100 countries worldwide. International shipping rates and delivery times vary by location.</p>
-                  <p>Please note that international orders may be subject to customs duties and taxes, which are the responsibility of the customer.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       
-      <div class="review-form-modal" id="review-form-modal">
-        <div class="review-form-content">
-          <div class="review-form-header">
-            <h3><i class="fas fa-pen"></i> Write a Review</h3>
-            <button id="close-review-form" class="close-btn">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <form id="review-form">
-            <div class="form-group">
-              <label for="review-name">Your Name</label>
-              <input type="text" id="review-name" required placeholder="Enter your name">
-            </div>
-            <div class="form-group">
-              <label for="review-email">Your Email</label>
-              <input type="email" id="review-email" required placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-              <label>Rating</label>
-              <div class="rating-input">
-                <i class="far fa-star" data-rating="1"></i>
-                <i class="far fa-star" data-rating="2"></i>
-                <i class="far fa-star" data-rating="3"></i>
-                <i class="far fa-star" data-rating="4"></i>
-                <i class="far fa-star" data-rating="5"></i>
-                <span class="rating-text">Select a rating</span>
-              </div>
-              <input type="hidden" id="review-rating" value="0" required>
-            </div>
-            <div class="form-group">
-              <label for="review-title">Review Title</label>
-              <input type="text" id="review-title" required placeholder="Summarize your review">
-            </div>
-            <div class="form-group">
-              <label for="review-content">Your Review</label>
-              <textarea id="review-content" rows="5" required placeholder="Tell us what you liked or didn't like about this product"></textarea>
-            </div>
-            <div class="form-actions">
-              <button type="button" class="btn outline-btn" id="cancel-review">Cancel</button>
-              <button type="submit" class="btn primary-btn">Submit Review</button>
-            </div>
-          </form>
-        </div>
-      </div>
-      
-      <div class="related-products">
-        <h2>You May Also Like</h2>
-        <div class="products-grid" id="related-products">
-          <!-- Related products will be populated by JavaScript -->
-        </div>
-      </div>
-      
-      <div class="recently-viewed">
-        <h2>Recently Viewed</h2>
-        <div class="products-grid" id="recently-viewed-products">
-          <!-- Recently viewed products will be populated by JavaScript -->
-        </div>
-      </div>
     </div>
   </main>
 
@@ -493,7 +282,124 @@
   <div id="notification" class="notification"></div>
 
   <script src="script.js"></script>
-  <script src="product-reviews.js"></script>
+  <script>
+    // Add your product image sources here
+    const productImages = [
+      "../img/OV5118.webp",
+      "../img/Red_05.webp",
+      "../img/img3.webp",
+      "../img/OV5666.webp"
+    ];
+  
+    let currentIndex = 0;
+    const mainImage = document.getElementById("main-product-image");
+  
+    const showImage = (index) => {
+      if (index >= 0 && index < productImages.length) {
+        mainImage.src = productImages[index];
+      }
+    };
+  
+    document.getElementById("gallery-next").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % productImages.length; // Wrap around
+      showImage(currentIndex);
+    });
+  
+    document.getElementById("gallery-prev").addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + productImages.length) % productImages.length; // Wrap around
+      showImage(currentIndex);
+    });
+  
+    // Optional: preload all images for smooth navigation
+    productImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const minusBtn = document.getElementById("quantity-minus");
+      const plusBtn = document.getElementById("quantity-plus");
+      const quantityInput = document.getElementById("quantity");
+  
+      plusBtn.addEventListener("click", () => {
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+      });
+  
+      minusBtn.addEventListener("click", () => {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+          quantityInput.value = currentValue - 1;
+        }
+      });
+    });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const addToCartBtn = document.getElementById("add-to-cart-btn");
+      const cartCountSpan = document.getElementById("cartCount");
+  
+      // Load cart count on page load
+      updateCartCount();
+  
+      addToCartBtn.addEventListener("click", () => {
+        const productName = document.getElementById("product-name").textContent;
+        const productPrice = document.getElementById("product-price").textContent;
+        const productImage = document.getElementById("main-product-image").src;
+        const productSKU = document.getElementById("product-sku").textContent;
+        const selectedSize = document.getElementById("size").value;
+        const quantity = parseInt(document.getElementById("quantity").value);
+  
+        if (!selectedSize) {
+          alert("Please select a size before adding to cart.");
+          return;
+        }
+  
+        const product = {
+          sku: productSKU,
+          name: productName,
+          price: productPrice,
+          image: productImage,
+          size: selectedSize,
+          quantity: quantity,
+        };
+  
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+        // Check if same product with same size already exists
+        const existingProductIndex = cart.findIndex(
+          (item) => item.sku === product.sku && item.size === product.size
+        );
+  
+        if (existingProductIndex !== -1) {
+          cart[existingProductIndex].quantity += quantity;
+        } else {
+          cart.push(product);
+        }
+  
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        showNotification("Product added to cart!");
+      });
+  
+      function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountSpan.textContent = totalCount;
+      }
+  
+      function showNotification(message) {
+        const notification = document.getElementById("notification");
+        notification.textContent = message;
+        notification.classList.add("show");
+        setTimeout(() => {
+          notification.classList.remove("show");
+        }, 2000);
+      }
+    });
+  </script>
+  
 </body>
 </html>
 

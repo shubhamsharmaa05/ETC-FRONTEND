@@ -156,7 +156,7 @@
                 <span>or</span>
               </div>
               
-              <div  id="googleSignInButton"></div>
+              <!-- <div  id="googleSignInButton"></div>  ⚠️stoping google sign up for sometime -->
             </form>
             
             <div class="auth-footer">
@@ -298,29 +298,25 @@
               return;
           }
 
-          try {
-              const response = await fetch("http://localhost:8000/api/v1/users/signUp", {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify(formData)
-              });
+          const response = await fetch("http://localhost:8000/api/v1/users/signUp", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData),
+                credentials: "include" // ✅ Make sure cookies are saved
+        });
 
-              const result = await response.json();
-              
-              if (response.ok) {
-                  alert("Account created successfully");
-                  window.location.href = "index.html"; // Redirect to dashboard or login page
-              } else {
-                  alert(result.message || "Registration failed");
-              }
-          } catch (error) {
-              console.error("Error during registration:", error);
-              alert("Something went wrong. Please try again.");
-          }
-      });
-  });
+        const result = await response.json();
+
+        if (response.ok) {
+          // Redirect to index.html where you display profile
+          window.location.href = 'login.html';
+        } else {
+          alert(`Signup failed: ${result.message}`);
+        }
+              });
+          });
 </script>
 </body>
 </html>

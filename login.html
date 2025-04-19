@@ -183,7 +183,7 @@
                 <span>or</span>
               </div>
               
-              <div  id="googleSignInButton"></div>
+              <!-- <div  id="googleSignInButton"></div>         // ⚠️ stoping google login for sometime -->
             </form>
             
             <div class="auth-footer">
@@ -339,6 +339,7 @@
             headers: {
               "Content-Type": "application/json",
             },
+            credentials: "include", 
             body: JSON.stringify(requestData),
           });
   

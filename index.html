@@ -6,6 +6,10 @@
   <title>ETCETRA - Premium Oversized Clothing</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
 </head>
 <body>
   <div class="site-wrapper">
@@ -55,16 +59,16 @@
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
               </svg>
             </button>
-            <a href="cart.html" class="icon-button" aria-label="Cart">
+            <a href="cart.html" class="icon-btn cart-icon" aria-label="Cart">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                 <line x1="3" y1="6" x2="21" y2="6"></line>
                 <path d="M16 10a4 4 0 0 1-8 0"></path>
               </svg>
-              <span id="cartCount" class="cart-count"></span>
+              <span id="cartCount" class="cart-count" style="background-color: red;"></span>
             </a>
-            <a href="login.html" class="icon-button" aria-label="Account">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <a class="icon-button" id="profileOpen" aria-label="Account">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" pointer-events='none';>
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
@@ -185,9 +189,15 @@
               Our most popular oversized t-shirts, designed for comfort and style.
             </p>
           </div>
-          <div class="products-grid" id="featuredProducts">
+
+          <section class="showcase-grid container">
+            <div class="hero1-img"><img src="../img/OV5118.webp" alt=""></img><h3>New Arrivals</h3></div>
+            <div><img src="../img/Red_05.webp" alt=""><h3>Polo Shirt</h3></div>
+            <div><img src="../img/img3.webp" alt=""><h3>Full Sleeves</h3></div>
+          </section>
+          <!-- <div class="products-grid" id="featuredProducts">
             <!-- Products will be loaded via JavaScript -->
-          </div>
+        </div> -->
           <div class="view-all">
             <a href="products.html" class="button outline">View All Products</a>
           </div>
@@ -306,7 +316,87 @@
     </footer>
   </div>
 
+  <!-- profile section -->
+   <div id="profile-section">
+    <i class="ri-close-line" id="abcd"></i>
+    <div id="user-info">
+      <h3 id="user-name">Name: </h3>
+      <p id="user-email">Email: </p>
+    </div>
+
+
+
+    <!-- Edit Button -->
+    <button id="auth-btn">login <i class="ri-arrow-right-line"></i></button>
+   </div>
   <script src="script.js"></script>
+  <style href="styles.css"></style>
+  <script>
+    document.getElementById('auth-btn').addEventListener('click', function () {
+      window.location.href = 'login.html'; // replace with your actual login page path
+    });
+      // For profile icon (first element with class 'icon-button')
+    document.getElementById('abcd').addEventListener('click',function(){
+      document.getElementById('profile-section').style.transform = 'translateX(100%)'
+    })
+    document.getElementById('profileOpen').addEventListener('click',function(){
+      document.getElementById('profile-section').style.transform = 'translateX(0%)'
+    })
+  </script>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost:8000/api/v1/users/me', {
+      method: 'GET',
+      credentials: 'include' // ✅ keep this
+    })
+    .then(res => res.json())
+    .then(response => {
+      const user = response.data;
+
+      if (user && user.firstName) {
+        // ✅ User is logged in
+        document.getElementById('auth-btn').innerText = 'Logout';
+        document.getElementById('auth-btn').addEventListener('click', handleLogout);
+
+        // Optional: Display user info
+        document.getElementById('user-name').innerText = `Name: ${user.firstName} ${user.lastName || ''}`;
+        document.getElementById('user-email').innerText = `Email: ${user.email}`;
+      }
+    })
+    .catch(err => {
+      console.error("User not logged in:", err);
+      // Default: show login button behavior
+      document.getElementById('auth-btn').innerText = 'Login';
+      document.getElementById('auth-btn').addEventListener('click', () => {
+        window.location.href = 'login.html'; // or wherever your login page is
+      });
+    });
+  });
+
+  // 👇 Logout handler
+  async function handleLogout() {
+    try {
+      await fetch('http://localhost:8000/api/v1/users/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+
+      alert('Logged out!');
+      window.location.href = 'login.html'; // or reload page to update UI
+    } catch (err) {
+      console.error('Logout failed:', err);
+      alert('Logout failed');
+    }
+  }
+    </script>
+  <script>
+    document.querySelectorAll('.showcase-grid div').forEach(div => {
+      div.addEventListener('click', () => {
+        window.location.href = 'products.html';
+      });
+    });
+  </script>
 </body>
 </html>
+
 

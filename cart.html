@@ -55,19 +55,6 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
-        <a href="cart.html" class="icon-button active" aria-label="Cart">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
-        </a>
-        <a href="login.html" class="icon-button" aria-label="Account">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-        </a>
       </div>
     </div>
   </div>
@@ -116,11 +103,49 @@
       <div class="cart-items">
         <!-- Cart items will be loaded via JavaScript -->
       </div>
-      
+    
       <div class="cart-summary">
         <!-- Cart summary will be loaded via JavaScript -->
       </div>
+    
+      <div class="delivery-section" style="margin-top: 30px;">
+        <h2>Delivery Address</h2>
+        <form id="deliveryForm">
+          <div>
+            <label for="name">Full Name</label><br />
+            <input type="text" id="name" name="name" required />
+          </div>
+    
+          <div>
+            <label for="phone">Phone Number</label><br />
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required />
+          </div>
+    
+          <div>
+            <label for="address">Address</label><br />
+            <textarea id="address" name="address" rows="3" required></textarea>
+          </div>
+    
+          <div>
+            <label for="city">City</label><br />
+            <input type="text" id="city" name="city" required />
+          </div>
+    
+          <div>
+            <label for="state">State</label><br />
+            <input type="text" id="state" name="state" required />
+          </div>
+    
+          <div>
+            <label for="pincode">Pincode</label><br />
+            <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" required />
+          </div>
+    
+          <button type="submit" class="button primary" id="proceedToPayment" style="margin-top: 10px;">Place Order</button>
+        </form>
+      </div>
     </div>
+    
     
     <div class="empty-cart" style="display: none;">
       <div class="empty-cart-content">
@@ -135,12 +160,6 @@
       </div>
     </div>
     
-    <div class="recommended-products">
-      <h2>You might also like</h2><br>
-      <div class="products-grid" id="recommendedProducts">
-        <!-- Products will be loaded via JavaScript -->
-      </div>
-    </div>
     
     <!-- FAQ section moved below products -->
     <div class="cart-faq">
@@ -266,6 +285,193 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartSummaryContainer = document.querySelector('.cart-summary');
+    const emptyCart = document.querySelector('.empty-cart');
+
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Function to update cart in local storage
+    function updateCart() {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      renderCart();
+    }
+
+    // Function to render the cart
+    function renderCart() {
+      if (cartItems.length === 0) {
+        emptyCart.style.display = 'block';
+        cartItemsContainer.innerHTML = '';
+        cartSummaryContainer.innerHTML = '';
+        return;
+      }
+
+      emptyCart.style.display = 'none';
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+
+      cartItems.forEach((item, index) => {
+        total += item.price * item.quantity;
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('cart-item');
+        itemElement.innerHTML = `
+          <div class="item-image">
+            <img src="${item.image}" alt="${item.name}" style="height: auto; width: 100px;" class="product-image">
+          </div>
+          <div class="item-details">
+            <span class="item-name">${item.name}</span>
+            <span class="item-price">₹${item.price}</span>
+            
+            <!-- Displaying selected size -->
+            <span class="item-size">Size: ${item.size}</span>
+
+            <div class="quantity-controls">
+              <button class="decrease-quantity" data-index="${index}">-</button>
+              <span class="item-quantity">${item.quantity}</span>
+              <button class="increase-quantity" data-index="${index}">+</button>
+            </div>
+            <button class="remove-item" data-index="${index}">Remove</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(itemElement);
+      });
+
+      cartSummaryContainer.innerHTML = `
+        <div class="summary-details">
+          <span>Total: ₹${total}</span>
+        </div>
+      `;
+
+      // Add event listeners for increase/decrease/remove actions
+      const increaseButtons = document.querySelectorAll('.increase-quantity');
+      const decreaseButtons = document.querySelectorAll('.decrease-quantity');
+      const removeButtons = document.querySelectorAll('.remove-item');
+
+      increaseButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.getAttribute('data-index');
+          cartItems[index].quantity++;
+          updateCart();
+        });
+      });
+
+      decreaseButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.getAttribute('data-index');
+          if (cartItems[index].quantity > 1) {
+            cartItems[index].quantity--;
+            updateCart();
+          }
+        });
+      });
+
+      removeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.getAttribute('data-index');
+          cartItems.splice(index, 1);  // Remove item from array
+          updateCart();
+        });
+      });
+    }
+
+    renderCart();
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const deliveryForm = document.getElementById("deliveryForm");
+
+    deliveryForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userData = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        state: document.getElementById("state").value.trim(),
+        pincode: document.getElementById("pincode").value.trim()
+      };
+
+      if (!/^\d{10}$/.test(userData.phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+
+      if (!/^\d{6}$/.test(userData.pincode)) {
+        alert("Please enter a valid 6-digit pincode.");
+        return;
+      }
+
+      localStorage.setItem("deliveryInfo", JSON.stringify(userData));
+
+      alert("Order placed successfully!");
+      deliveryForm.reset();
+
+      // Optional: redirect or show confirmation
+      // window.location.href = "/thank-you.html";
+    });
+  });
+</script>
+
+<script>
+  document.getElementById("proceedToPayment").addEventListener("click", async function () {
+  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  const deliveryInfo = JSON.parse(localStorage.getItem("deliveryInfo")) || {};
+
+  if (cartItems.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  // Total calculation
+  const totalAmount = cartItems.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
+
+  const orderData = {
+    cartItems,
+    address: deliveryInfo,
+    totalAmount
+  };
+
+  try {
+    const response = await fetch("http://localhost:8000/api/v1/users/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Optional: add token if using auth middleware
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify(orderData),
+      credentials: "include",
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert("Order placed successfully. Redirecting to payment...");
+      // Clear cart after order is placed
+      localStorage.removeItem("cart");
+      localStorage.removeItem("deliveryInfo");
+
+      // Redirect to payment
+      window.location.href = "payment.html";  // e.g., /payment/:orderId
+    } else {
+      alert("Order failed: " + data.message);
+    }
+
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred while placing the order.");
+  }
+});
+
+</script>
+
+
 </body>
 </html>
 
