@@ -318,7 +318,7 @@
         itemElement.classList.add('cart-item');
         itemElement.innerHTML = `
           <div class="item-image">
-            <img src="${item.image}" alt="${item.name}" style="height: auto; width: 100px;" class="product-image">
+            <img src="${item.image}" alt="${item.name}" style="height: auto; width: 100px; object-fit: cover; " class="product-image">
           </div>
           <div class="item-details">
             <span class="item-name">${item.name}</span>
@@ -407,7 +407,6 @@
 
       localStorage.setItem("deliveryInfo", JSON.stringify(userData));
 
-      alert("Order placed successfully!");
       deliveryForm.reset();
 
       // Optional: redirect or show confirmation
@@ -450,7 +449,10 @@
     });
 
     const data = await response.json();
-
+    if(data.redirect){
+      window.location.href = data.redirect;
+    return;
+    }
     if (data.success) {
       alert("Order placed successfully. Redirecting to payment...");
       // Clear cart after order is placed
@@ -458,7 +460,7 @@
       localStorage.removeItem("deliveryInfo");
 
       // Redirect to payment
-      window.location.href = "payment.html";  // e.g., /payment/:orderId
+      window.location.href = data.redirectUrl;  // e.g., /payment/:orderId
     } else {
       alert("Order failed: " + data.message);
     }
