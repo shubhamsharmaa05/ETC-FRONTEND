@@ -289,7 +289,7 @@
         console.log("Google ID Token:", response.credential); // Check if it's a JWT token
 
         // Send token to backend
-        fetch("http://localhost:8000/api/v1/users/auth/signUp", {
+        fetch("/api/v1/users/auth/signUp", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -334,7 +334,7 @@
   
         try {
           // Send POST request to backend
-          const response = await fetch("http://localhost:8000/api/v1/users/login", {
+          const response = await fetch("/api/v1/users/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

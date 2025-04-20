@@ -345,7 +345,7 @@
   </script>
     <script>
       window.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:8000/api/v1/users/me', {
+    fetch('/api/v1/users/me', {
       method: 'GET',
       credentials: 'include' // ✅ keep this
     })
@@ -376,7 +376,7 @@
   // 👇 Logout handler
   async function handleLogout() {
     try {
-      await fetch('http://localhost:8000/api/v1/users/logout', {
+      await fetch('/api/v1/users/logout', {
         method: 'POST',
         credentials: 'include'
       });
